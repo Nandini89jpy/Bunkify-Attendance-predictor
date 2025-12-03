@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bunkify Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h2>Welcome to Bunkify, {{ session['user'] }} 👋</h2>
+    <a href="/logout">Logout</a>
+
+    <h3>📊 Check Your Bunk Status</h3>
+
+    <form method="POST" action="/predict">
+        <input type="number" name="attended" placeholder="Classes Attended" required>
+        <input type="number" name="total" placeholder="Total Classes" required>
+        <input type="number" name="bunk" placeholder="Classes You Want to Bunk" required>
+        <button type="submit">Predict</button>
+    </form>
+
+
+    <h3>📜 Prediction History</h3>
+
+    <form method="POST" action="/clear_history">
+        <button type="submit" class="danger">Clear History</button>
+    </form>
+
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Current %</th>
+            <th>After Bunk %</th>
+            <th>Teacher Reaction</th>
+        </tr>
+        {% for record in history %}
+        <tr>
+            <td>{{ record.date }}</td>
+            <td>{{ record.current }}%</td>
+            <td>{{ record.after_bunk }}%</td>
+            <td>{{ record.decision }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+</body>
+</html>
