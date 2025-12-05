@@ -1,14 +1,10 @@
 from flask import Flask, render_template, request, redirect, session
 from datetime import datetime
+import re
 
 app = Flask(__name__)
 app.secret_key = "bunkify123"
 
-# Dummy Users
-users = {
-    "akansha": "1234",
-    "student": "0000"
-}
 
 # History storage
 history = []
@@ -29,19 +25,19 @@ def bunkify_predictor(current_attendance, total_classes, bunk_classes):
         decision = "🤬 Teacher: Detention is coming!"
 
     return round(current_percent, 2), round(new_percent, 2), decision
+    
 
 
 @app.route("/", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
+        email=request.form["email"]
 
-        if username in users and users[username] == password:
-            session["user"] = username
+        if re.match(r"[^@]+@[^@]+\.[^@]+",email):
+            session["user"] = email
             return redirect("/dashboard")
         else:
-            return render_template("login.html", error="❌ Invalid Credentials")
+            return render_template("login.html", error="❌ Invalid Email Address")
 
     return render_template("login.html")
 
