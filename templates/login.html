@@ -7,15 +7,14 @@
 <body>
 
 <div class="container">
-    <h2>🔐 Bunkify Login</h2>
+    <h2>🔐 Login with Email</h2>
 
     {% if error %}
         <p class="error">{{ error }}</p>
     {% endif %}
 
     <form method="POST">
-        <input type="text" name="username" placeholder="Enter Username" required>
-        <input type="password" name="password" placeholder="Enter Password" required>
+        <input type="email" name="email" placeholder="Enter Valid Email" required>
         <button type="submit">Login</button>
     </form>
 </div>
